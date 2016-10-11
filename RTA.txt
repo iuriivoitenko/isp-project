@@ -9,7 +9,7 @@ no shut
 
 in f1/0
 ip add 10.1.0.5 255.255.255.252
-ipv6 address fd00:10:1:1::1/64
+ipv6 address fd00:10:1:1::2/64
 no shut
 
 in g0/2
