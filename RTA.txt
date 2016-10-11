@@ -1,0 +1,48 @@
+en
+conf t
+
+! interface config
+
+in f1/1
+ip add 10.0.16.2 255.255.255.252
+no shut
+
+in f1/0
+ip add 10.1.0.5 255.255.255.252
+ipv6 address fd00:10:1:1::1/64
+no shut
+
+in g0/2
+ip add 10.1.0.1 255.255.255.252
+ipv6 address fd00:10:1::1/64
+no shut
+
+in lo0
+ip add 10.1.3.1 255.255.255.255
+ipv6 address fd00:10:21::1/64
+no shut
+
+
+!Internal Routing IPv4
+router ospf 1
+router-id 10.1.3.1
+network 10.1.0.4 0.0.0.3 area 0
+network 10.1.0.0 0.0.0.3 area 0
+network 10.1.3.1 0.0.0.0 area 0
+! redistribute bgp <AS number>
+
+
+!Internal Routing IPv6
+
+ipv6 unicast-routing 
+ipv6 router ospf 1
+router-id 10.1.3.1
+
+in f1/0
+ipv6 ospf 1 area 0
+
+in g0/2
+ipv6 ospf 1 area 0
+
+in lo0
+ipv6 ospf 1 area 0
