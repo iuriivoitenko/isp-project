@@ -1,0 +1,50 @@
+RTA:
+
+enable
+configure terminal
+ip multicast-routing
+interface gi 0/2
+ip pim sparse-mode
+interface fa 1/0
+ip pim sparse-mode
+exit
+ip pim rp-address 10.1.3.2
+
+
+RTB:
+
+enable
+configure terminal
+ip multicast-routing
+interface gi 0/0
+ip pim sparse-mode
+interface gi 0/1
+ip pim sparse-mode
+interface fa 1/0
+ip pim sparse-mode
+exit
+ip pim rp-address 10.1.3.2
+
+
+RTC:
+
+enable
+configure terminal
+ip multicast-routing
+interface gi 0/2
+ip pim sparse-mode
+interface gi 0/0
+ip pim sparse-mode
+interface gi 0/1
+ip pim sparse-mode
+exit
+ip pim rp-address 10.1.3.2
+
+
+TEST:
+
+ host1: mcast -i eth0 -d 0 239.0.1.1:8989
+ host2: mrcv -i eth0 239.0.1.1:8989
+
+
+
