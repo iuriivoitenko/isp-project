@@ -52,3 +52,17 @@ ipv6 ospf 1 area 0
 
 in lo0
 ipv6 ospf 1 area 0
+
+!Multicast
+
+enable
+configure terminal
+ip multicast-routing
+interface gi 0/1
+ip pim sparse-mode
+interface fa 1/0
+ip pim sparse-mode
+interface gi 0/0
+ip pim sparse-mode
+exit
+ip pim rp-address 10.1.3.2
