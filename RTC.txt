@@ -40,7 +40,7 @@ network 10.1.0.0 0.0.0.3 area 0
 
 network 10.1.3.3 0.0.0.0 area 0
 
-redistribute bgp 12 subnets
+redistribute bgp 11 subnets
 
 
 
@@ -64,31 +64,25 @@ ipv6 ospf 1 area 0
 
 !BGP
 
-enable
-configure terminal
-router bgp 12
-network 10.1.0.4 mask 255.255.255.252
-network 10.1.0.0 mask 255.255.255.252
-network 10.1.0.8 mask 255.255.255.252
+router bgp 11
 
 neighbor 10.1.3.1 remote-as 11
 neighbor 10.1.3.1 update-source Loopback0
 neighbor 10.1.3.1 next-hop-self
 neighbor 10.3.0.1 remote-as 12
-neighbor 10.3.0.1 filter-list 10 out
+
 neighbor 10.3.0.1 route-map SETLOCAL in
-neighbor 10.3.0.1 route-map SETMETRIC out
+neighbor 10.3.0.1 route-map PREPEND out
 no auto-summary
 no synchronization
 
 route-map SETLOCAL permit 10
 set local-preference 100
 
-route-map SETMETRIC permit 10
-match ip address 1
-set metric 50
 
-route-map SETMETRIC permit 20
+route-map PREPEND permit 10
+set as-path prepend 11 11 11
+end
 
 
 !Multicast
